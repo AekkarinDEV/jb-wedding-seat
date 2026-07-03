@@ -23,7 +23,6 @@ export default function GuestCard({ guest }: GuestCardProps) {
       <div className="guest-card__divider" />
 
       <p className="guest-card__zone">โซน {guest.zone}</p>
-      <p className="guest-card__group">{guest.groupName}</p>
 
       <CheckInButton
         guestId={guest.id}

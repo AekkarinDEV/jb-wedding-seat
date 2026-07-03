@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { importGuests, getStats, getAllGuests, logout } from "./actions";
 import type { DashboardStats, ImportStats, Guest } from "@/types/guest";
+import { ClipboardList, FolderUp, BarChart3, Users, Search, FileSpreadsheet, CheckCircle, XCircle, LogOut } from "lucide-react";
 
 /**
  * AdminDashboard — Client component for the admin dashboard.
@@ -84,10 +85,10 @@ export default function AdminDashboard() {
     <div className="admin-container">
       {/* Header */}
       <header className="admin-header">
-        <h1 className="admin-header__title">📋 Admin Dashboard</h1>
+        <h1 className="admin-header__title"><ClipboardList size={24} /> Admin Dashboard</h1>
         <form action={logout}>
           <button type="submit" className="admin-header__logout">
-            ออกจากระบบ
+            <LogOut size={16} /> ออกจากระบบ
           </button>
         </form>
       </header>
@@ -112,7 +113,7 @@ export default function AdminDashboard() {
 
       {/* Upload Section */}
       <section className="upload-section">
-        <h2 className="upload-section__title">📁 นำเข้าข้อมูลจาก Excel</h2>
+        <h2 className="upload-section__title"><FolderUp size={20} /> นำเข้าข้อมูลจาก Excel</h2>
 
         <div
           className={`upload-dropzone ${dragActive ? "upload-dropzone--active" : ""}`}
@@ -124,10 +125,10 @@ export default function AdminDashboard() {
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
-          <div className="upload-dropzone__icon">📄</div>
+          <div className="upload-dropzone__icon"><FileSpreadsheet size={40} /></div>
           {selectedFile ? (
             <p className="upload-dropzone__text">
-              ✅ {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
+              <CheckCircle size={16} style={{ display: 'inline', color: 'var(--color-green)' }} /> {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
             </p>
           ) : (
             <>
@@ -177,7 +178,7 @@ export default function AdminDashboard() {
             {importResult.errors.length > 0 ? (
               <div>
                 <p style={{ fontWeight: 600, color: "var(--color-red)" }}>
-                  ❌ เกิดข้อผิดพลาด:
+                  <XCircle size={16} style={{ display: 'inline' }} /> เกิดข้อผิดพลาด:
                 </p>
                 {importResult.errors.map((err, i) => (
                   <p key={i} style={{ fontSize: "0.875rem" }}>
@@ -193,7 +194,7 @@ export default function AdminDashboard() {
                     color: "var(--color-green-dark)",
                   }}
                 >
-                  ✅ นำเข้าสำเร็จ!
+                  <CheckCircle size={16} style={{ display: 'inline' }} /> นำเข้าสำเร็จ!
                 </p>
                 <p style={{ fontSize: "0.875rem" }}>
                   นำเข้า {importResult.totalImported} รายการ จาก{" "}
@@ -208,7 +209,7 @@ export default function AdminDashboard() {
       {/* Zone Stats */}
       {stats && stats.byZone.length > 0 && (
         <section>
-          <h2 className="upload-section__title">📊 สถิติตามโซน</h2>
+          <h2 className="upload-section__title"><BarChart3 size={20} /> สถิติตามโซน</h2>
           <div className="data-table-wrapper">
             <table className="data-table">
               <thead>
@@ -241,10 +242,10 @@ export default function AdminDashboard() {
 
       {/* Guest List */}
       <section style={{ marginTop: "var(--space-8)" }}>
-        <h2 className="upload-section__title">👥 รายชื่อแขกทั้งหมด ({guestList.length} คน)</h2>
+        <h2 className="upload-section__title"><Users size={20} /> รายชื่อแขกทั้งหมด ({guestList.length} คน)</h2>
 
         <div className="search-input-wrapper" style={{ marginBottom: "var(--space-4)" }}>
-          <span className="search-input-wrapper__icon" aria-hidden="true">🔍</span>
+          <span className="search-input-wrapper__icon" aria-hidden="true"><Search size={18} /></span>
           <input
             type="text"
             className="search-input"
@@ -290,7 +291,7 @@ export default function AdminDashboard() {
                     <td>{guest.groupName}</td>
                     <td>
                       {guest.status === "checked-in" ? (
-                        <span style={{ color: "var(--color-green)" }}>✅</span>
+                        <span style={{ color: "var(--color-green)" }}><CheckCircle size={16} /></span>
                       ) : (
                         <span style={{ color: "var(--color-gray-500)" }}>—</span>
                       )}

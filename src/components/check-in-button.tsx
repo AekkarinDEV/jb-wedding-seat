@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { CheckCircle, Loader2, CircleCheck } from "lucide-react";
 
 /**
  * CheckInButton — Allows guests to mark themselves as checked in.
@@ -43,18 +44,26 @@ export default function CheckInButton({
   }, [guestId, isCheckedIn, loading]);
 
   return (
-    <button
-      id={`checkin-button-${guestId}`}
-      className={`checkin-button ${isCheckedIn ? "checkin-button--checked" : ""}`}
-      onClick={handleCheckIn}
-      disabled={isCheckedIn || loading}
-    >
-      <span
-        className={`checkin-button__icon ${isCheckedIn ? "checkin-button__icon--animated" : ""}`}
+    <div className="checkin-wrapper">
+      <button
+        id={`checkin-button-${guestId}`}
+        className={`checkin-button ${isCheckedIn ? "checkin-button--checked" : ""}`}
+        onClick={handleCheckIn}
+        disabled={isCheckedIn || loading}
       >
-        {loading ? "⏳" : isCheckedIn ? "✅" : "☑"}
-      </span>
-      {loading ? "กำลังเช็คอิน..." : isCheckedIn ? "เช็คอินแล้ว" : "Check-in"}
-    </button>
+        <span
+          className={`checkin-button__icon ${isCheckedIn ? "checkin-button__icon--animated" : ""}`}
+        >
+          {loading ? (
+            <Loader2 size={20} className="spin" />
+          ) : isCheckedIn ? (
+            <CheckCircle size={20} />
+          ) : (
+            <CircleCheck size={20} />
+          )}
+        </span>
+        {loading ? "กำลังเช็คอิน..." : isCheckedIn ? "เช็คอินแล้ว" : "Check-in"}
+      </button>
+    </div>
   );
 }
