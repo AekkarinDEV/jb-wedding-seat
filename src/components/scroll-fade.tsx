@@ -1,32 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function ScrollFade({ children }: { children: React.ReactNode }) {
-  const [opacity, setOpacity] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Get the scroll position
+    let ticking = false;
+
+    const updateOpacity = () => {
+      if (!containerRef.current) return;
+      
       const scrollY = window.scrollY;
+      const newOpacity = Math.max(0, 1 - scrollY / 450);
       
-      // Calculate opacity: 1 at top, fades to 0 over 200px
-      // 0.2 means it fades out very smoothly
-      const newOpacity = Math.max(0, 1 - scrollY / 200);
+      containerRef.current.style.opacity = newOpacity.toString();
+      containerRef.current.style.pointerEvents = newOpacity === 0 ? "none" : "auto";
       
-      setOpacity(newOpacity);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateOpacity);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Check initial position in case of page reload
-    handleScroll();
+    // Initial setup
+    updateOpacity();
     
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <div style={{ opacity, transition: "opacity 0.1s ease-out", pointerEvents: opacity === 0 ? "none" : "auto" }}>
+    <div ref={containerRef} style={{ position: "relative", zIndex: 10 }}>
       {children}
     </div>
   );

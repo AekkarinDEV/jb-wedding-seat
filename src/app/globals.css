@@ -63,7 +63,19 @@
   --transition-slow: 400ms ease;
 
   /* Layout */
-  --max-width: 480px;
+  --max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --max-width: 1024px;
+  }
 }
 
 /* --- Reset & Base --- */
@@ -225,7 +237,7 @@ body {
 .title-section__heading {
   font-family: var(--font-display);
   font-size: 2.2rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-gold-dark);
   letter-spacing: 0;
   margin-bottom: var(--space-1);
@@ -272,6 +284,8 @@ body {
 .search-section {
   padding: var(--space-4) var(--space-6);
   animation: slideUp var(--transition-slow) ease-out 200ms both;
+  max-width: 540px;
+  margin: 0 auto;
 }
 
 .search-input-wrapper {
@@ -359,7 +373,9 @@ body {
 
 /* --- Guest Card --- */
 .guest-card {
-  margin: var(--space-4) var(--space-6);
+  margin: var(--space-4) auto;
+  max-width: 480px;
+  width: calc(100% - var(--space-12));
   padding: var(--space-6);
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.85);
@@ -402,7 +418,7 @@ body {
   /* font-family: var(--font-display); */
   font-family: var(--font-body);
   font-size: 3.8rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--color-gold-dark);
   line-height: 1.2;
   margin-bottom: var(--space-2);
