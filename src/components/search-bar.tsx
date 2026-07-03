@@ -14,7 +14,7 @@ import GuestCard from "./guest-card";
  */
 export default function SearchBar() {
   const [query, setQuery] = useState("");
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const [, setGuests] = useState<Guest[]>([]);
   const [results, setResults] = useState<Guest[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [loading, setLoading] = useState(true);

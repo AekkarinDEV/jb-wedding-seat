@@ -32,7 +32,6 @@ function getDb() {
  * Proxy that lazily initializes the Drizzle ORM instance on first access.
  * This prevents build-time errors when TURSO_DATABASE_URL is not set.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const db = new Proxy({} as ReturnType<typeof drizzle<typeof schema>>, {
   get(_target, prop) {
     const instance = getDb();

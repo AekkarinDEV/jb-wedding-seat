@@ -2,10 +2,8 @@
 
 import { db } from "@/db";
 import { guests } from "@/db/schema";
-import type { NewGuest } from "@/db/schema";
 import { isAdminAuthenticated, clearAdminCookie } from "@/lib/admin-auth";
 import { parseExcel, validateGuestData } from "@/lib/excel-parser";
-import { sql, count, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import type { ImportStats, DashboardStats } from "@/types/guest";
 

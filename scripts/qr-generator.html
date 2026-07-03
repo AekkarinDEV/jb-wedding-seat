@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wedding QR Code Generator</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fdf8f0;
+      color: #3d2b1f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(61,43,31,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 { margin-top: 0; color: #a68a3e; text-align: center; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 500; }
+    input[type="text"], input[type="file"] {
+      width: 100%; padding: 10px; border: 1px solid #ddd;
+      border-radius: 6px; box-sizing: border-box;
+    }
+    button {
+      width: 100%; padding: 12px; background: #a68a3e;
+      color: white; border: none; border-radius: 6px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #8b7355; }
+    #result { margin-top: 30px; text-align: center; display: none; }
+    #download-btn {
+      display: inline-block; margin-top: 15px; padding: 10px 20px;
+      background: #4caf50; color: white; text-decoration: none;
+      border-radius: 6px; font-weight: 600;
+    }
+    canvas { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+
+  <div class="card">
+    <h2>QR Code Generator</h2>
+    
+    <div class="form-group">
+      <label>URL (ลิงก์เว็บจัดที่นั่ง)</label>
+      <input type="text" id="url" value="https://jb-wedding-seat.vercel.app">
+    </div>
+
+    <div class="form-group">
+      <label>Logo Image (เลือกไฟล์ logo.png)</label>
+      <input type="file" id="logo" accept="image/*">
+    </div>
+
+    <button onclick="generateQR()">Generate QR Code</button>
+
+    <div id="result">
+      <canvas id="qr-canvas"></canvas>
+      <br>
+      <a id="download-btn" href="#" download="wedding-qr-code.png">Download Image</a>
+    </div>
+  </div>
+
+  <script>
+    async function generateQR() {
+      const url = document.getElementById('url').value;
+      const fileInput = document.getElementById('logo');
+      const canvas = document.getElementById('qr-canvas');
+      
+      if (!fileInput.files[0]) {
+        alert("Please select the logo image first!");
+        return;
+      }
+
+      // Read the logo file
+      const reader = new FileReader();
+      reader.onload = async function(event) {
+        const logoUrl = event.target.result;
+        const logoImg = new Image();
+        logoImg.onload = async function() {
+          // Generate QR code onto a temporary canvas
+          const tempCanvas = document.createElement('canvas');
+          await QRCode.toCanvas(tempCanvas, url, {
+            errorCorrectionLevel: 'H',
+            margin: 2,
+            width: 1000,
+            color: { dark: '#a68a3e', light: '#ffffff' }
+          });
+
+          // Draw on the final canvas
+          canvas.width = 1000;
+          canvas.height = 1000;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.drawImage(tempCanvas, 0, 0);
+
+          // Calculate logo size (28% of QR code)
+          const logoSize = canvas.width * 0.28;
+          const logoX = (canvas.width - logoSize) / 2;
+          const logoY = (canvas.height - logoSize) / 2;
+
+          // Draw white circle background
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(canvas.width / 2, canvas.height / 2, (logoSize / 2) + 15, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Draw the logo
+          ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
+
+          // Show result
+          document.getElementById('result').style.display = 'block';
+          
+          // Setup download link
+          const downloadBtn = document.getElementById('download-btn');
+          downloadBtn.href = canvas.toDataURL("image/png");
+        };
+        logoImg.src = logoUrl;
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  </script>
+</body>
+</html>

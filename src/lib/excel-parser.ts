@@ -1,17 +1,7 @@
 import * as XLSX from "xlsx";
 import type { NewGuest } from "@/db/schema";
 
-/** Column mapping from Excel headers to our schema fields */
-const COLUMN_MAP = {
-  SearchName: "searchName",
-  FullName: "fullName",
-  Table: "tableName",
-  Zone: "zone",
-  Group: "groupName",
-  Status: "status",
-  CheckInTime: "checkInAt",
-  Note: "note",
-} as const;
+
 
 /**
  * Parses an Excel buffer into an array of guest objects.
