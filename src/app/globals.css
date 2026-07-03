@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* --- Google Fonts Import --- */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap");
 
 /* --- Design Tokens --- */
 :root {
@@ -29,8 +29,8 @@
   --color-gray-700: #616161;
 
   /* Typography */
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Sarabun", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Kanit", sans-serif;
+  --font-body: "Kanit", sans-serif;
 
   /* Spacing scale (4px base) */
   --space-1: 0.25rem; /* 4px */
@@ -208,6 +208,9 @@ body {
   margin: 0 auto;
   padding: var(--space-2) 0;
   animation: scaleIn var(--transition-slow) ease-out;
+  position: relative;
+  z-index: 10;
+  background-color: transparent;
 }
 
 /* --- Title Section --- */
@@ -215,20 +218,22 @@ body {
   text-align: center;
   padding: var(--space-2) var(--space-6) var(--space-4);
   animation: fadeIn var(--transition-slow) ease-out;
+  position: relative;
+  z-index: 10;
 }
 
 .title-section__heading {
   font-family: var(--font-display);
-  font-size: 1.75rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 500;
   color: var(--color-gold-dark);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   margin-bottom: var(--space-1);
 }
 
 .title-section__subtitle {
   font-family: var(--font-body);
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   color: var(--color-brown-medium);
   font-weight: 400;
 }
@@ -252,7 +257,13 @@ body {
   left: 0;
   width: 100%;
   height: calc(100% + 280px);
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.7) 80px, var(--color-white) 200px, var(--color-white) 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.7) 80px,
+    var(--color-white) 200px,
+    var(--color-white) 100%
+  );
   z-index: -1;
   border-radius: 0 0 calc(var(--radius-xl) - 4px) calc(var(--radius-xl) - 4px);
   pointer-events: none;
@@ -370,7 +381,7 @@ body {
 
 .guest-card__name {
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--color-brown-medium);
   padding-bottom: var(--space-3);
@@ -381,15 +392,16 @@ body {
 
 .guest-card__table-label {
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 1.125rem;
   color: var(--color-gold-dark);
   font-weight: 600;
   margin-bottom: var(--space-1);
 }
 
 .guest-card__table-number {
-  font-family: var(--font-display);
-  font-size: 3rem;
+  /* font-family: var(--font-display); */
+  font-family: var(--font-body);
+  font-size: 3.8rem;
   font-weight: 700;
   color: var(--color-gold-dark);
   line-height: 1.2;
@@ -404,13 +416,15 @@ body {
 }
 
 .guest-card__zone {
-  font-size: 0.8125rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
   color: var(--color-brown-medium);
   margin-bottom: var(--space-1);
 }
 
 .guest-card__group {
-  font-size: 0.875rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-brown-dark);
 }
@@ -433,7 +447,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: var(--color-green-dark);
-  background: #F7F3EC;
+  background: #f7f3ec;
   border: 2px solid var(--color-green);
   border-radius: var(--radius-lg);
   cursor: pointer;

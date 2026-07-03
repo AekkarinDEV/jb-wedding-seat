@@ -9,7 +9,7 @@ export default function HeroBanner() {
   return (
     <div className="hero__logo">
       <Image
-        src="/images/Screenshot 2026-07-03 083508 1.png"
+        src="/images/logo.png"
         alt="JB Monogram"
         width={90}
         height={110}
