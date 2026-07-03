@@ -2,6 +2,8 @@
 
 import { db } from "@/db";
 import { guests } from "@/db/schema";
+import type { NewGuest } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { isAdminAuthenticated, clearAdminCookie } from "@/lib/admin-auth";
 import { parseExcel, validateGuestData } from "@/lib/excel-parser";
 import { redirect } from "next/navigation";
@@ -118,4 +120,35 @@ export async function getAllGuests() {
 export async function logout() {
   await clearAdminCookie();
   redirect("/admin/login");
+}
+
+/**
+ * Adds a new guest manually.
+ */
+export async function addGuest(data: Omit<NewGuest, "id">) {
+  await requireAdmin();
+  const [newGuest] = await db.insert(guests).values(data).returning();
+  return newGuest;
+}
+
+/**
+ * Updates an existing guest.
+ */
+export async function updateGuest(id: number, data: Partial<NewGuest>) {
+  await requireAdmin();
+  const [updatedGuest] = await db
+    .update(guests)
+    .set(data)
+    .where(eq(guests.id, id))
+    .returning();
+  return updatedGuest;
+}
+
+/**
+ * Deletes a guest.
+ */
+export async function deleteGuest(id: number) {
+  await requireAdmin();
+  await db.delete(guests).where(eq(guests.id, id));
+  return true;
 }

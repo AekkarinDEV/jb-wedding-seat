@@ -31,7 +31,7 @@ export default function HomePage() {
 
           <div className="title-section">
             <h1 className="title-section__heading">ยินดีต้อนรับแขกทุกท่าน</h1>
-            <p className="title-section__subtitle">ค้นหาโต๊ะงานแต่ง</p>
+            <p className="title-section__subtitle">ค้นหาโต๊ะในงานแต่ง</p>
           </div>
         </ScrollFade>
 

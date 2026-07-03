@@ -34,7 +34,7 @@ export default function SearchBar() {
               { name: "searchName", weight: 0.7 },
               { name: "fullName", weight: 0.3 },
             ],
-            threshold: 0.4,
+            threshold: 0.0,
             minMatchCharLength: 2,
             includeScore: true,
             ignoreLocation: true,
