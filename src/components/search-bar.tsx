@@ -90,7 +90,7 @@ export default function SearchBar() {
             id="guest-search-input"
             type="text"
             className="search-input"
-            placeholder="พิมพ์ชื่อจองของท่าน"
+            placeholder="พิมพ์ชื่อจริงของท่าน หรือ ชื่อบนหน้าซอง"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
