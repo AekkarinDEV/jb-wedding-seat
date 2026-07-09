@@ -13,12 +13,34 @@ interface GuestCardProps {
 }
 
 export default function GuestCard({ guest }: GuestCardProps) {
+  // Dynamically adjust font size for long table names (like "25-29,31,32,39A")
+  const getTableFontSize = (text: string) => {
+    const len = text.length;
+    if (len <= 5) return "3.8rem";
+    if (len <= 9) return "3.2rem";
+    if (len <= 12) return "2.8rem";
+    return "2.4rem"; // Very long text like "25-29,31,32,39A"
+  };
+
+  const isVeryLong = guest.tableName.length > 12;
+
   return (
     <div className="guest-card" id={`guest-card-${guest.id}`}>
       <p className="guest-card__name">{guest.fullName}</p>
 
       <p className="guest-card__table-label">โต๊ะ</p>
-      <p className="guest-card__table-number">{guest.tableName}</p>
+      <p 
+        className="guest-card__table-number"
+        style={{ 
+          fontSize: getTableFontSize(guest.tableName),
+          letterSpacing: isVeryLong ? "-0.04em" : "normal",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+      >
+        {guest.tableName}
+      </p>
 
       <div className="guest-card__divider" />
 
